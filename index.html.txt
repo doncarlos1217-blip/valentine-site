@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffe6eb, #ffd1dc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Floating Hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0.6; }
+  100% { transform: translateY(-110vh); opacity: 0; }
+}
+
+.container {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  max-width: 400px;
+  width: 90%;
+}
+
+h1 {
+  color: #e6005c;
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+#yes {
+  background: #ff4d79;
+  color: white;
+}
+
+#yes:hover {
+  transform: scale(1.1);
+  background: #e6005c;
+}
+
+#no {
+  background: #999;
+  color: white;
+  position: fixed;
+  transition: left 0.2s ease, top 0.2s ease, transform 0.2s ease;
+}
+
+#result {
+  display: none;
+  margin-top: 20px;
+}
+
+img {
+  width: 250px;
+  border-radius: 15px;
+  margin-top: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Will you be my Valentine? ❤️</h1>
+  <button id="yes">Yes 💖</button>
+  <button id="no">No 😢</button>
+
+  <div id="result">
+    <h2>Yayyy!!! 💕🥰</h2>
+    <p>You just made my day!</p>
+    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebration GIF">
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const result = document.getElementById("result");
+
+let scale = 1;
+const minScale = 0.4;
+const shrinkStep = 0.1;
+
+function moveAndShrink() {
+  if (scale > minScale) {
+    scale -= shrinkStep;
+    noBtn.style.transform = `scale(${scale})`;
+  }
+
+  const rect = noBtn.getBoundingClientRect();
+  const maxX = window.innerWidth - rect.width;
+  const maxY = window.innerHeight - rect.height;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+}
+
+noBtn.addEventListener("mouseenter", moveAndShrink);
+noBtn.addEventListener("touchstart", moveAndShrink);
+
+yesBtn.addEventListener("click", () => {
+  result.style.display = "block";
+  noBtn.style.display = "none";
+  yesBtn.style.display = "none";
+});
+
+/* Floating Hearts Generator */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 15 + "px";
+  heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}
+
+setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
